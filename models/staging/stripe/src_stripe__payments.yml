@@ -5,6 +5,13 @@ sources:
     database: dbt-tutorial
     schema: stripe
     loaded_at_field: _batched_at
+    freshness: # https://docs.getdbt.com/reference/source-properties
+      error_after:
+        count: 2
+        period: hour
+      warn_after:
+        count: 2
+        period: hour
     tables:
       - name: payment
         columns:
