@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: jaffle_shop
+  - name: jaffle_shop # what you want to call it
     database: dbt-tutorial
     schema: jaffle_shop
     loaded_at_field: _etl_loaded_at
@@ -21,4 +21,5 @@ sources:
               - unique
               - not_null
         freshness: null
+
       - name: orders

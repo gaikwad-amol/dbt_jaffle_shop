@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: stripe
+    database: dbt-tutorial
+    schema: stripe
+    loaded_at_field: _batched_at
+    tables:
+      - name: payment
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
