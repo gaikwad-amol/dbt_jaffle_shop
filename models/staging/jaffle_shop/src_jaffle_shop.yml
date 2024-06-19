@@ -5,7 +5,7 @@ sources:
     database: dbt-tutorial
     schema: jaffle_shop
     loaded_at_field: _etl_loaded_at
-    freshness:
+    freshness: # https://docs.getdbt.com/reference/source-properties
       error_after:
         count: 24
         period: hour
