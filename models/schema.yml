@@ -43,6 +43,8 @@ models:
             exclude:
               - lifetime_value
     # versioning end
+
+
   - name: fct_orders
     columns:
       - name: order_id
@@ -52,20 +54,28 @@ models:
       - name: customer_id
         tests:
           - not_null
+
+
   - name: stg_jaffle_shop__customers
+    description: Represents one unique customer per row from the source
     columns:
       - name: customer_id
+        description: This is the primary key
         tests:
           - unique
           - not_null
 
+
   - name: stg_jaffle_shop__orders
+    description: Represents one order per row
     columns:
       - name: order_id
+        description: This is the primary key
         tests: # check the logs to see the compiled sql query created for the tests
           - unique
           - not_null
       - name: status
+        description: "{{ doc('order_status)}}"
         tests:
           - accepted_values:
               values:
@@ -76,6 +86,7 @@ models:
           - relationships:
               to: ref('stg_jaffle_shop__customers')
               field: customer_id
+
 
   - name: stg_stripe__payments
     columns:
