@@ -33,6 +33,22 @@ models:
   dbt_jaffle_shop:
     # Config indicated by + and applies to all files under models/example/
     staging:
-      +materialized: view
+      jaffle_shop:
+        +materialized: view
+        +group: customer_success
+      stripe:
+        +materialized: view
+        +group: finance
     marts:
-      +materialized: table
+      finance:
+        +materialized: table
+        +group: finance # https://docs.getdbt.com/docs/collaborate/govern/model-access
+      marketing:
+        +materialized: table
+        +group: customer_success # https://docs.getdbt.com/docs/collaborate/govern/model-access
+
+data_tests:
+  dbt_jaffle_shop:
+    finance_tests:
+      assert_stg_payments_amount_is_positive:
+        +group: finance

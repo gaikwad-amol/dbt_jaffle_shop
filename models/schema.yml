@@ -1,8 +1,26 @@
 version: 2
 
+# Defining groups https://docs.getdbt.com/docs/build/groups
+groups:
+  - name: finance
+    owner:
+      # 'name' or 'email' is required; additional properties allowed
+      email: finance@jaffleshop.com
+      slack: finance-data
+      github: finance-data-team
+  - name: customer_success
+    owner:
+      # 'name' or 'email' is required; additional properties allowed
+      email: customer_success@jaffleshop.com
+      slack: customer-success
+      github: customer-success-data-team
+
 models:
   - name: dim_customers
+    description: Represents one unique customer per row
+    access: public
     config:
+      group: customer_success
       contract: # https://docs.getdbt.com/reference/resource-properties/constraints
         enforced: true
         alias_type: true # it is true by default, added as reminder
@@ -46,6 +64,7 @@ models:
 
 
   - name: fct_orders
+    access: public
     columns:
       - name: order_id
         tests:
@@ -58,6 +77,7 @@ models:
 
   - name: stg_jaffle_shop__customers
     description: Represents one unique customer per row from the source
+    access: private
     columns:
       - name: customer_id
         description: This is the primary key
@@ -68,6 +88,7 @@ models:
 
   - name: stg_jaffle_shop__orders
     description: Represents one order per row
+    access: protected # this is used in the finance fct_orders
     columns:
       - name: order_id
         description: This is the primary key
@@ -89,6 +110,9 @@ models:
 
 
   - name: stg_stripe__payments
+    access: private
+    config:
+      group: finance # this config will override what is there in dbt_project.yml i.e. project level
     columns:
       - name: payment_id
         tests:
