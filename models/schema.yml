@@ -2,11 +2,23 @@ version: 2
 
 models:
   - name: dim_customers
+    latest_version: 1
     columns:
       - name: customer_id
         tests:
           - unique
           - not_null
+      - name: lifetime_value
+    versions:
+      - v: 2
+      - v: 1
+        config:
+          alias: dim_customers
+        columns:
+          - include: "*"
+            exclude:
+              - lifetime_value
+
   - name: fct_orders
     columns:
       - name: order_id
@@ -32,7 +44,8 @@ models:
       - name: status
         tests:
           - accepted_values:
-              values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+              values:
+                ["placed", "shipped", "completed", "return_pending", "returned"]
       - name: customer_id
         tests:
           - not_null
@@ -55,4 +68,4 @@ models:
       - name: status
         tests:
           - accepted_values:
-              values: [ 'success', 'fail' ]
+              values: ["success", "fail"]
