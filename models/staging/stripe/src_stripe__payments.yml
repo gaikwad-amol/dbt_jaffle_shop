@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: stripe
+    description: a clone of a Postgres application database
     database: dbt-tutorial
     schema: stripe
     loaded_at_field: _batched_at
@@ -14,8 +15,10 @@ sources:
         period: hour
     tables:
       - name: payment
+        description: This is the raw payment table
         columns:
           - name: id
+            description: This is the primary key
             tests:
               - unique
               - not_null

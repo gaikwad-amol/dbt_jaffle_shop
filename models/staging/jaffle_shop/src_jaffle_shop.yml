@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: jaffle_shop # what you want to call it
+    description: a clone of a Postgres application database
     database: dbt-tutorial
     schema: jaffle_shop
     loaded_at_field: _etl_loaded_at
@@ -15,11 +16,14 @@ sources:
 
     tables:
       - name: customers
+        description: This is the raw customer data
         columns:
           - name: id
+            description: This is the primary key
             tests:
               - unique
               - not_null
         freshness: null # skip the freshness as the loaded at is not available for this table
 
       - name: orders
+        description: This is the raw customer data
